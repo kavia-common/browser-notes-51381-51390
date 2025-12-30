@@ -4,10 +4,20 @@
   --bg-primary: #ffffff;
   --bg-secondary: #f8f9fa;
   --text-primary: #282c34;
-  --text-secondary: #61dafb;
+  --text-secondary: #3b82f6;
   --border-color: #e9ecef;
+
+  /* Simple UI tokens */
+  --surface: #ffffff;
+  --surface-2: #f3f4f6;
+  --muted: #6b7280;
+  --danger: #ef4444;
+
   --button-bg: #007bff;
   --button-text: #ffffff;
+
+  --radius: 12px;
+  --shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
 }
 
 [data-theme="dark"] {
@@ -17,88 +27,246 @@
   --text-primary: #ffffff;
   --text-secondary: #61dafb;
   --border-color: #404040;
+
+  --surface: #1f2937;
+  --surface-2: #111827;
+  --muted: rgba(255, 255, 255, 0.7);
+
   --button-bg: #0056b3;
   --button-text: #ffffff;
+
+  --shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
 }
 
 .App {
-  text-align: center;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
   min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: var(--bg-secondary);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  background: var(--bg-primary);
   color: var(--text-primary);
-  transition: background-color 0.3s ease;
-  position: relative;
 }
 
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
-}
-
+/* Theme toggle (kept from template; minor alignment tweaks) */
 .theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
   background-color: var(--button-bg);
   color: var(--button-text);
   border: none;
   border-radius: 8px;
-  padding: 10px 20px;
+  padding: 10px 14px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.15s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
 .theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+  transform: translateY(-1px);
+  opacity: 0.95;
 }
-
 .theme-toggle:active {
   transform: translateY(0);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* --- Notes App minimal layout (ready for styling) --- */
+.notes-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-secondary);
 }
 
-/* Responsive design for mobile */
-@media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
+.notes-title {
+  margin: 0;
+  font-size: 20px;
+  letter-spacing: 0.2px;
+}
+
+.notes-subtitle {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.notes-main {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 16px;
+  padding: 16px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.notes-sidebar,
+.notes-editor {
+  background: var(--surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.notes-sidebar {
+  overflow: hidden;
+}
+
+.notes-sidebar__actions {
+  padding: 12px;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--surface-2);
+}
+
+.notes-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.notes-list__empty {
+  padding: 12px;
+  color: var(--muted);
+}
+
+.notes-list__item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: stretch;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.notes-list__select {
+  text-align: left;
+  border: none;
+  background: transparent;
+  padding: 12px;
+  cursor: pointer;
+  color: inherit;
+}
+
+.notes-list__item.is-selected .notes-list__select {
+  background: rgba(59, 130, 246, 0.08);
+}
+
+.notes-list__title {
+  font-weight: 650;
+  font-size: 14px;
+}
+
+.notes-list__meta {
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.notes-list__delete {
+  border: none;
+  border-left: 1px solid var(--border-color);
+  background: transparent;
+  padding: 0 12px;
+  cursor: pointer;
+  color: var(--danger);
+  font-weight: 600;
+}
+
+.notes-editor {
+  padding: 14px;
+}
+
+.notes-editor__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.notes-editor__title {
+  margin: 0;
+  font-size: 16px;
+}
+
+.notes-editor__headerActions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.notes-editor__form {
+  padding-top: 12px;
+  display: grid;
+  gap: 12px;
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+}
+
+.field__label {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.field__input,
+.field__textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  padding: 10px 12px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  outline: none;
+}
+
+.field__input:focus,
+.field__textarea:focus {
+  border-color: var(--text-secondary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.18);
+}
+
+.notes-editor__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 6px;
+}
+
+.notes-editor__hint {
+  font-size: 12px;
+  color: var(--muted);
+  text-align: right;
+}
+
+/* Buttons */
+.btn {
+  border: 1px solid var(--border-color);
+  background: var(--surface);
+  color: var(--text-primary);
+  padding: 9px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 650;
+}
+.btn:hover {
+  opacity: 0.95;
+}
+.btn-primary {
+  border-color: transparent;
+  background: var(--button-bg);
+  color: var(--button-text);
+}
+.btn-danger {
+  border-color: transparent;
+  background: var(--danger);
+  color: #fff;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .notes-main {
+    grid-template-columns: 1fr;
   }
 }
